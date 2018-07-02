@@ -1,0 +1,5 @@
+type Follower {
+  id: ID! @unique
+  createdAt: DateTime!
+  login: String!
+}
