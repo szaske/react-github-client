@@ -2,4 +2,12 @@ type Follower {
   id: ID! @unique
   createdAt: DateTime!
   login: String!
+  following: RepositoryOwner
+}
+
+type RepositoryOwner {
+  id: ID! @unique
+  login: String!
+  avaterUrl: String!
+  followers: [Follower!]!
 }

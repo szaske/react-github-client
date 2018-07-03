@@ -11,3 +11,8 @@ datamodel: datamodel.graphql
 secret: mysecret123
 #cluster: public-blueguardian-546/prisma-us1
 endpoint: https://us1.prisma.sh/public-blueguardian-546/github-node/dev
+
+# see; https://www.prisma.io/forum/t/need-help-with-tutorial-cannot-read-property-request-of-undefined/3514/4
+# hooks:
+# post-deploy:
+# - graphql get-schema --project database
