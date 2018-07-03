@@ -5,19 +5,19 @@ import gql from 'graphql-tag'
 
 class RepoList extends Component {
   render() {
-  // 1
+  // While loading
   if (this.props.repoQuery && this.props.repoQuery.loading) {
     return <div>Loading</div>
   }
 
-  // 2
+  // If errors returned
   if (this.props.repoQuery && this.props.repoQuery.error) {
     return <div>Error</div>
   }
 
-  // 3
+  // We have data, render it
   const reposToRender = this.props.repoQuery.repos
-
+  
     return (
       <div className="d-flex flex-wrap bg-light" >{reposToRender.map(repo => <Repo key={repo.name} repo={repo} />)}</div>
     )
