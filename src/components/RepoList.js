@@ -5,6 +5,7 @@ import gql from 'graphql-tag'
 
 class RepoList extends Component {
   render() {
+    console.log(this.props.repoQuery)
   // While loading
   if (this.props.repoQuery && this.props.repoQuery.loading) {
     return <div>Loading</div>
@@ -18,13 +19,13 @@ class RepoList extends Component {
   // We have data, render it
   const reposToRender = this.props.repoQuery.repos
   
-    return (
-      <div className="d-flex flex-wrap bg-light" >{reposToRender.map(repo => <Repo key={repo.name} repo={repo} />)}</div>
-    )
+  return (
+    <div className="d-flex flex-wrap bg-light" >{reposToRender.map(repo => <Repo key={repo.name} repo={repo} />)}</div>
+  )
   }
 }
 
-// 1
+// The query
 const REPO_QUERY = gql`
   query RepoQuery {
     repos{
@@ -32,6 +33,7 @@ const REPO_QUERY = gql`
       owner{
         login
         avatarUrl
+        followers
       }
     }
   }
