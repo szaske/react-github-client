@@ -13,7 +13,7 @@
     "react-apollo": "^2.1.8",
     "react-dom": "^16.4.1",
     "react-scripts": "1.1.4",
-    "react-tooltip": "^3.6.1"
+    "react-tippy": "^1.2.2"
   },
   "scripts": {
     "start": "react-scripts start",

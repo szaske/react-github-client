@@ -1,33 +1,12 @@
 import React, { Component } from 'react'
 import Repo from './Repo'
-import { graphql } from 'react-apollo'
+import { Query } from 'react-apollo'
 import gql from 'graphql-tag'
 
-class RepoList extends Component {
-  render() {
-    console.log(this.props.repoQuery)
-  // While loading
-  if (this.props.repoQuery && this.props.repoQuery.loading) {
-    return <div>Loading</div>
-  }
-
-  // If errors returned
-  if (this.props.repoQuery && this.props.repoQuery.error) {
-    return <div>Error</div>
-  }
-
-  // We have data, render it
-  const reposToRender = this.props.repoQuery.repos
-  
-  return (
-    <div className="d-flex flex-wrap bg-light" >{reposToRender.map(repo => <Repo key={repo.name} repo={repo} />)}</div>
-  )
-  }
-}
-
-// The query
-const REPO_QUERY = gql`
-  query RepoQuery {
+// Repo Search
+const REPO_SEARCH = gql`
+query ($repoCount: Int){
+  search(count:$repoCount){
     repos{
       name
       owner{
@@ -37,6 +16,36 @@ const REPO_QUERY = gql`
       }
     }
   }
-`
+}`
 
-export default graphql(REPO_QUERY, {name: 'repoQuery'}) (RepoList)
+export default class RepoList extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      repoCount: 18
+    }
+  }
+
+  render() {
+    return (
+      <Query 
+        query={REPO_SEARCH} 
+        skip={!this.state.repoCount} 
+        variables={{repoCount: this.state.repoCount}}
+      >
+        {({loading, error, data}) => {
+            if (loading) return <h1>loading</h1>;
+            if (error) return <h1>Something went wrong.</h1>;
+
+            // const reposToRender = data.search.repos
+            console.log(data)
+            return (
+              //<div>results</div>
+              <div className="d-flex flex-wrap bg-light" >{data.search.repos.map(repo => <Repo key={repo.name} repo={repo} />)}</div>
+            ) 
+        }}
+      </Query>
+    )
+  }
+}
