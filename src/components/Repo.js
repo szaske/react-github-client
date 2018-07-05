@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
 import { Tooltip } from 'react-tippy';
+import '../styles/Repo.css';
 
 class Repo extends Component {
 
+  // not yet used
   valLimits(v, min, max) {
     return (Math.min(max, Math.max(min, v)));
   }

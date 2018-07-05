@@ -5,7 +5,6 @@ import ReactDOM from 'react-dom'
 import './styles/index.css'
 import App from './components/App'
 import registerServiceWorker from './registerServiceWorker'
-//1
 import { ApolloProvider } from 'react-apollo'
 import { ApolloClient } from 'apollo-client'
 import { HttpLink } from 'apollo-link-http'

@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import Repo from './Repo'
 import { Query } from 'react-apollo'
 import gql from 'graphql-tag'
+import '../styles/RepoList.css';
 
 // Repo Search
 const REPO_SEARCH = gql`
@@ -9,6 +10,7 @@ query ($repoCount: Int){
   search(count:$repoCount){
     repos{
       name
+      id
       owner{
         login
         avatarUrl
@@ -23,7 +25,7 @@ export default class RepoList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      repoCount: 5,
+      repoCount: 0,
       width: 0,
       height: 0,
     }
@@ -39,12 +41,14 @@ export default class RepoList extends Component {
     window.removeEventListener('resize', this.updateWindowDimensions);
   }
   
+  // Method to determine window size. 
+  // Used to determine how many repos/imgs to request
+  // Divided by 14400 because our imgs are 120x120
   updateWindowDimensions() {
-    console.log("Window Size, W:"+window.innerWidth + ",H:" + window.innerHeight)
     this.setState({ 
       width: window.innerWidth, 
       height: window.innerHeight,
-      repoCount: Math.floor(window.innerWidth*window.innerHeight/10000)
+      repoCount: Math.floor(window.innerWidth*window.innerHeight/14400)
     })
   }
 
@@ -56,15 +60,24 @@ export default class RepoList extends Component {
         variables={{repoCount: this.state.repoCount}}
       >
         {({loading, error, data}) => {
-            if (loading) return <h1>loading</h1>;
-            if (error) return <h1>Something went wrong.</h1>;
-            if (data.search == null) return <h1>Something went wrong.</h1>;
-
-            // const reposToRender = data.search.repos
-            console.log(data)
+            if (loading) return (
+              <div className="container h-100">
+                <div className="row h-100 justify-content-center align-items-center">
+                  loading...
+                </div>  
+              </div>
+            );
+            if (error || data.search == null) return (
+              <div className="container h-100">
+                <div className="row h-100 justify-content-center align-items-center">
+                  something went wrong :(
+                </div>  
+              </div>
+            );
             return (
-              //<div>results</div>
-              <div className="d-flex flex-wrap bg-light" >{data.search.repos.map(repo => <Repo key={repo.name} repo={repo} />)}</div>
+              <div className="container-fluid h-90">
+                <div className="row d-flex flex-wrap justify-content-center bg-light-gray" >{data.search.repos.map(repo => <Repo key={repo.id} repo={repo} />)}</div>
+              </div>
             ) 
         }}
       </Query>
