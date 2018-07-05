@@ -2,6 +2,12 @@ import React, { Component } from 'react'
 import { Tooltip } from 'react-tippy';
 
 class Repo extends Component {
+
+  valLimits(v, min, max) {
+    return (Math.min(max, Math.max(min, v)));
+  }
+
+  // see https://stackoverflow.com/questions/23274338/how-to-keep-wrapped-flex-items-the-same-width-as-the-elements-on-the-previous-ro
   render() {
   // Check for a or A
   var firstLetter = this.props.repo.owner.login.charAt(0)
