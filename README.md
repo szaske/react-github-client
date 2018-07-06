@@ -12,8 +12,8 @@ This client requires a GraphQL server running on localhost:4000 to work.  You ca
 ```bash
 git clone https://github.com/szaske/react-github-client.git
 cd react-github-client
-npm install
-npm start
+yarn install
+yarn start
 ```
 
 ### Built With
